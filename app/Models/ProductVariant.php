@@ -27,13 +27,13 @@ class ProductVariant extends Model
         'length',
         'stock',
         'availability',
-        'status'
+        'status',
     ];
 
-    protected $casts =[
+    protected $casts = [
         'availability' => 'boolean',
         'status' => 'boolean',
         'base_price' => 'decimal:2',
-        'original_price' => 'decimal:2'
+        'original_price' => 'decimal:2',
     ];
 }

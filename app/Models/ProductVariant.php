@@ -18,7 +18,22 @@ class ProductVariant extends Model
     protected $fillable = [
         'product_id',
         'variant_name',
-        'attribute_value_id',
+        'attribute_value_ids',
+        'base_price',
+        'original_price',
+        'width',
+        'height',
+        'breadth',
+        'length',
         'stock',
+        'availability',
+        'status'
+    ];
+
+    protected $casts =[
+        'availability' => 'boolean',
+        'status' => 'boolean',
+        'base_price' => 'decimal:2',
+        'original_price' => 'decimal:2'
     ];
 }

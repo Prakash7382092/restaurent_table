@@ -15,12 +15,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('vendor_id')->constrained('users')->onDelete('cascade');
             $table->string('name');
+            $table->text('short_description')->nullable();
             $table->text('description')->nullable();
+            $table->string('type')->nullable();
             $table->string('slug')->nullable();
             $table->string('sku')->unique();
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
-            $table->decimal('base_price', 10, 2);
-            $table->decimal('original_price', 10, 2)->nullable();
+            $table->integer('total_allowed_qty')->default(1);
+            $table->string('featured_image')->nullable();
+            $table->json('images')->nullable();
             $table->boolean('is_approved')->default(false);
             $table->boolean('is_active')->default(true);
             $table->boolean('is_featured')->default(false);

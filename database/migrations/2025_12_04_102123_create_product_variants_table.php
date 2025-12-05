@@ -15,8 +15,16 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->string('variant_name');
-            $table->foreignId('attribute_value_id')->constrained('attribute_values')->onDelete('cascade');
+            $table->decimal('base_price', 10, 2);
+            $table->decimal('original_price', 10, 2)->nullable();
+            $table->text('attribute_value_ids')->nullable();
+            $table->decimal('width', 10, 2)->default(0);
+            $table->decimal('height', 10, 2)->default(0);
+            $table->decimal('breadth', 10, 2)->default(0);
+            $table->decimal('length', 10, 2)->default(0);
             $table->integer('stock')->default(0);
+            $table->boolean('availability')->default(true);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

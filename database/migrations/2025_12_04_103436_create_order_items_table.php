@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('product_variant_id')->constrained('product_variants');
             $table->integer('quantity')->default(1);
             $table->decimal('unit_price', 10, 2);
+            $table->decimal('discounted_price', 10, 2);
             $table->timestamps();
         });
     }

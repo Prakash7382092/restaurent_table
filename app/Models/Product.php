@@ -18,14 +18,24 @@ class Product extends Model
     protected $fillable = [
         'vendor_id',
         'name',
+        'short_description',
         'description',
+        'type',
         'slug',
         'sku',
         'category_id',
-        'base_price',
-        'original_price',
+        'total_allowed_qty',
+        'featured_image',
+        'images',
         'is_approved',
         'is_active',
         'is_featured',
+    ];
+
+    protected $casts = [
+        'is_approved' => 'boolean',
+        'is_active' => 'boolean',
+        'is_featured' => 'boolean',
+        'images' => 'array'
     ];
 }

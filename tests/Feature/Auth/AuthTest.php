@@ -39,6 +39,9 @@ class AuthTest extends TestCase
             'password' => 'password',
             'password_confirmation' => 'password',
             'store_name' => 'Vendor Store',
+            'store_description' => 'A test vendor store description',
+            'store_location' => 'Karachi, Pakistan',
+            'store_contact' => '+92 300 0000000',
         ];
 
         $response = $this->postJson(route('auth.register.vendor'), $payload);

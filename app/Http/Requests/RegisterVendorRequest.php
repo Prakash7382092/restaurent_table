@@ -29,9 +29,9 @@ class RegisterVendorRequest extends FormRequest
 
             // vendor specific
             'store_name' => ['required', 'string', 'max:255'],
-            'store_description' => ['nullable', 'string', 'max:1000'],
-            'store_location' => ['nullable', 'string', 'max:255'],
-            'store_contact' => ['nullable', 'string', 'max:255'],
+            'store_description' => ['required', 'string', 'max:1000'],
+            'store_location' => ['required', 'string', 'max:255'],
+            'store_contact' => ['required', 'string', 'max:255'],
         ];
     }
 }

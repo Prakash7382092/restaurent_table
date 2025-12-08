@@ -28,6 +28,7 @@ class Order extends Model
         'order_currency',
         'transaction_id',
     ];
+
     protected $casts = [
         'total_amount' => 'decimal:2',
     ];

@@ -1,0 +1,20 @@
+#!/bin/sh
+# Pre-commit hook: run Pint on staged PHP files and restage any changes.
+
+echo "Running Pint on staged PHP files..."
+
+# Find staged PHP files
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.php$' || true)
+
+if [ -z "$STAGED_FILES" ]; then
+  echo "No PHP files staged. Skipping Pint."
+  exit 0
+fi
+
+# Run pint on each staged file (pint will modify files in-place)
+echo "$STAGED_FILES" | xargs -I{} ./vendor/bin/pint {}
+
+# Restage files in case Pint changed them
+echo "$STAGED_FILES" | xargs git add
+
+exit 0

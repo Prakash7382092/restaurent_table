@@ -1,0 +1,138 @@
+{
+  "info": {
+    "name": "Primooo - Auth",
+    "_postman_id": "primooo-auth-collection",
+    "description": "Postman collection for Primooo auth endpoints (register, login, me, logout). Login response token is stored to `auth_token` collection variable automatically.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Register Customer",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Test Customer\",\n  \"email\": \"customer@example.test\",\n  \"password\": \"password\",\n  \"password_confirmation\": \"password\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/register/customer",
+          "host": ["{{base_url}}"],
+          "path": ["auth","register","customer"]
+        }
+      }
+    },
+    {
+      "name": "Register Vendor",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Test Vendor\",\n  \"email\": \"vendor@example.test\",\n  \"password\": \"password\",\n  \"password_confirmation\": \"password\",\n  \"store_name\": \"Vendor Store\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/register/vendor",
+          "host": ["{{base_url}}"],
+          "path": ["auth","register","vendor"]
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"customer@example.test\",\n  \"password\": \"password\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/login",
+          "host": ["{{base_url}}"],
+          "path": ["auth","login"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Save token returned by login to a collection variable named auth_token",
+              "if (pm.response.code === 200 || pm.response.code === 201) {",
+              "    try {",
+              "        var json = pm.response.json();",
+              "        if (json.token) {",
+              "            pm.collectionVariables.set('auth_token', json.token);",
+              "            console.log('auth_token set');",
+              "        } else if (json.data && json.data.token) {",
+              "            pm.collectionVariables.set('auth_token', json.data.token);",
+              "            console.log('auth_token set from data.token');",
+              "        }",
+              "    } catch (e) {",
+              "        console.warn('No token found in login response', e);",
+              "    }",
+              "}",
+              "pm.test('Login responded', function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Forgot Password (placeholder)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.test\"\n}" },
+        "url": { "raw": "{{base_url}}/auth/forgot-password", "host": ["{{base_url}}"], "path": ["auth","forgot-password"] }
+      }
+    },
+    {
+      "name": "Reset Password (placeholder)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"token\": \"<token-from-email>\",\n  \"email\": \"user@example.test\",\n  \"password\": \"newpassword\",\n  \"password_confirmation\": \"newpassword\"\n}" },
+        "url": { "raw": "{{base_url}}/auth/reset-password", "host": ["{{base_url}}"], "path": ["auth","reset-password"] }
+      }
+    },
+    {
+      "name": "Me (authenticated)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{auth_token}}" }
+        ],
+        "url": { "raw": "{{base_url}}/auth/me", "host": ["{{base_url}}"], "path": ["auth","me"] }
+      }
+    },
+    {
+      "name": "Logout (authenticated)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{auth_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "{{base_url}}/auth/logout", "host": ["{{base_url}}"], "path": ["auth","logout"] }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8000/api" },
+    { "key": "auth_token", "value": "" }
+  ]
+}

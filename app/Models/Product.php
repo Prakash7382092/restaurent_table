@@ -36,6 +36,8 @@ class Product extends Model
         'is_approved' => 'boolean',
         'is_active' => 'boolean',
         'is_featured' => 'boolean',
-        'images' => 'array',
+       
     ];
+
+
 }

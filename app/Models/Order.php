@@ -32,4 +32,10 @@ class Order extends Model
     protected $casts = [
         'total_amount' => 'decimal:2',
     ];
+
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id', 'id');
+    }
 }

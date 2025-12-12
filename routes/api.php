@@ -4,6 +4,9 @@ use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ProductVariantController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\OrderItemController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -44,4 +47,37 @@ Route::get('/products/{id}', [ProductController::class, 'show'])->name('products
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 Route::post('/products/{id}', [ProductController::class, 'update'])->name('products.update');
 Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+
+// Product Variant routes
+Route::get('/product-variants', [ProductVariantController::class, 'index'])->name('product-variants.index');
+Route::get('/product-variants/{id}', [ProductVariantController::class, 'show'])->name('product-variants.show');
+Route::post('/product-variants', [ProductVariantController::class, 'store'])->name('product-variants.store');
+Route::post('/product-variants/{id}', [ProductVariantController::class, 'update'])->name('product-variants.update');
+Route::delete('/product-variants/{id}', [ProductVariantController::class, 'destroy'])->name('product-variants.destroy');
+
+//Order routes to be implemented here
+Route::post('/orders', [OrderController::class, 'store']);
+
+
+//Order routes to be implemented later
+// Route::prefix('orders')->group(function () {
+//     Route::get('/', [OrderController::class, 'index'])->name('orders.index');
+//     Route::get('/{id}', [OrderController::class, 'show'])->name('orders.show');
+//     Route::post('/', [OrderController::class, 'store'])->name('orders.store');
+//     Route::post('/{id}', [OrderController::class, 'update'])->name('orders.update');
+//     Route::delete('/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
+// }); 
+
+
+// Order Item routes can be added here
+// Route::prefix('order-items')->group(function () {
+//     // Define order item routes here
+//     Route::get('/', [OrderItemController::class, 'index'])->name('order-items.index');
+//     Route::post('/', [OrderItemController::class, 'store'])->name('order-items.store');
+//     Route::get('/{id}', [OrderItemController::class, 'show'])->name('order-items.show');
+//     Route::post('/{id}', [OrderItemController::class, 'update'])->name('order-items.update');
+//     Route::delete('/{id}', [OrderItemController::class, 'destroy'])->name('order-items.destroy');
+// }); 
+
 

@@ -16,3 +16,5 @@ Route::prefix('vendor')->group(function () {
     Route::get('/dashboard', [VendorAuth::class, 'Index'])->name('vendor.dashboard');
     Route::get('/logout', [VendorAuth::class, 'logout'])->name('vendor.logout');
 });
+
+

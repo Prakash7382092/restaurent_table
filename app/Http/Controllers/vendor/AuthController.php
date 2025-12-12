@@ -15,11 +15,11 @@ class AuthController extends Controller{
     // Vendor AuthController methods
     public function Index(){
         if (Session::has('vendor_name')) { 
-             flash()->success('Operation completed successfully.');       
+               
             return redirect()->route('vendor.dashboard');
-        }else{           
-            return redirect()->route('vendor.login')
-                        ->withErrors(['Invalid credentials or not a vendor.']);
+        }else{   
+             flash()->error('Please Login.');            
+            return redirect()->route('vendor.login');
         }
     }
 
@@ -43,8 +43,8 @@ class AuthController extends Controller{
            return view('vendor.index');  // Redirect to vendor dashboard or desired route
         } else {
             // Authentication failed...
-             flash()->error('OInvalid credentials or not a vendor.');
-            return redirect()->route('vendor.login')->error(['Invalid credentials or not a vendor.']);
+             flash()->error('Invalid credentials or not a vendor.');
+            return redirect()->route('vendor.login');
         }
 
     }

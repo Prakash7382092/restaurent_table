@@ -25,3 +25,5 @@ Route::middleware(['auth'])->as('admin.')->group(function () {
     // Dashboard (Admin)
     // Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 });
+
+

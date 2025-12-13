@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -13,29 +13,31 @@ class CategoryController extends Controller
     {
         //
         $categories = Category::all();
+
         return response()->json([
             'categories' => $categories,
         ], 200);
-    }   
+    }
 
-   public function show($id){
-      $categories = Category::where('id',$id)->get();
+    public function show($id)
+    {
+        $categories = Category::where('id', $id)->get();
+
         return response()->json([
             'categories' => $categories,
-        ], 200);     
+        ], 200);
 
-
-   }
+    }
 
     public function store(Request $request)
     {
         //
-         $request->validate([
+        $request->validate([
             'parent_id' => 'required',
             'name' => 'required',
             'slug' => 'required',
             'position' => 'required|integer',
-            
+
         ]);
         $category = Category::create([
             'parent_id' => $request->parent_id,
@@ -43,46 +45,49 @@ class CategoryController extends Controller
             'slug' => $request->slug,
             'position' => $request->position,
         ]);
+
         return response()->json([
             'message' => 'Category created successfully',
             'category' => $category,
         ], 201);
-        
+
     }
-    //Update category
+    // Update category
 
     public function update(Request $request, $id)
     {
         //
-            $request->validate([
-                'parent_id' => 'required',
-                'name' => 'required',
-                'slug' => 'required',
-                'position' => 'required|integer',
-                
-            ]);
+        $request->validate([
+            'parent_id' => 'required',
+            'name' => 'required',
+            'slug' => 'required',
+            'position' => 'required|integer',
 
-            $category = Category::findOrFail($id);
-            $category->update([
-                'parent_id' => $request->parent_id,
-                'name' => $request->name,
-                'slug' => $request->slug,   
-                'position' => $request->position,
-            ]);
-            return response()->json([
-                'message' => 'Category updated successfully',
-                'category' => $category,
-            ], 200);
+        ]);
+
+        $category = Category::findOrFail($id);
+        $category->update([
+            'parent_id' => $request->parent_id,
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'position' => $request->position,
+        ]);
+
+        return response()->json([
+            'message' => 'Category updated successfully',
+            'category' => $category,
+        ], 200);
     }
-    //Delete category
+    // Delete category
 
     public function destroy($id)
     {
         //
-            $category = Category::findOrFail($id);
-            $category->delete();
-            return response()->json([
-                'message' => 'Category deleted successfully',
-            ], 200);
+        $category = Category::findOrFail($id);
+        $category->delete();
+
+        return response()->json([
+            'message' => 'Category deleted successfully',
+        ], 200);
     }
 }

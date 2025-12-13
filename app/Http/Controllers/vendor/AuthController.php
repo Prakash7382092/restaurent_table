@@ -4,59 +4,54 @@ namespace App\Http\Controllers\vendor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-Use Illuminate\Support\Facades\Session;
 
-
-class AuthController extends Controller{
-    // Vendor AuthController methods
-    public function Index(){
-        if (Session::has('vendor_name')) { 
-             flash()->success('Operation completed successfully.');       
+class AuthController extends Controller
+{
+    public function showLogin()
+    {
+        if (Auth::check()) {
             return redirect()->route('vendor.dashboard');
-        }else{           
-            return redirect()->route('vendor.login')
-                        ->withErrors(['Invalid credentials or not a vendor.']);
-        }
-    }
-
-    public function login(Request $request){   
-       
-        // Vendor login logic here
-       return view('vendor.login');
-    }
-
-    public function check(Request $request){
-         $email = $request->input('email');
-         $password = $request->input('password');
-        $user = User::where('email', $email)->first();
-        if ($user && $user->isVendor() && \Hash::check($password, $user->password)) {     
-         
-                Session::put('vendor_name', $user->name);
-                Session::put('vendor_email', $user->email);
-
-              flash()->success('Vendor Login successfully.');
-            
-           return view('vendor.index');  // Redirect to vendor dashboard or desired route
-        } else {
-            // Authentication failed...
-             flash()->error('OInvalid credentials or not a vendor.');
-            return redirect()->route('vendor.login')->error(['Invalid credentials or not a vendor.']);
         }
 
+        return view('login');
     }
 
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-    public function logout(){
-         // Remove only vendor session values
-        Session::forget('vendor_name');
-        Session::forget('vendor_email');
+        if (Auth::attempt($credentials, $request->filled('remember'))) {
+            $request->session()->regenerate();
 
-        flash()->success('Vendor Logout successfully.');
+            $user = Auth::user();
 
-        return redirect()->route('vendor.login');
+            if ($user->role === 'admin') {
+                // return redirect()->intended(route('admin.dashboard'));
+            }
+
+            return redirect()->intended(route('vendor.dashboard'));
+        }
+
+        throw ValidationException::withMessages([
+            'email' => __('The provided credentials do not match our records.'),
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $user = Auth::user();
+
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login');
     }
 }

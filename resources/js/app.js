@@ -206,7 +206,7 @@ class LayoutCustomizer {
     setSwitchFromConfig() {
         const config = this.config;
 
-        sessionStorage.setItem('__TAILWICK_CONFIG__', JSON.stringify(config));
+        sessionStorage.setItem('__Primooo Chat_CONFIG__', JSON.stringify(config));
 
         document.querySelectorAll('#theme-customization input[type=radio]').forEach(cb => cb.checked = false);
 

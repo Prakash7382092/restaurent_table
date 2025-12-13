@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -32,12 +34,27 @@ class Product extends Model
         'is_featured',
     ];
 
-    protected $casts = [
-        'is_approved' => 'boolean',
-        'is_active' => 'boolean',
-        'is_featured' => 'boolean',
-       
-    ];
+    protected function casts(): array
+    {
+        return [
+            'is_approved' => 'boolean',
+            'is_active' => 'boolean',
+            'is_featured' => 'boolean',
+        ];
+    }
 
+    public function vendor(): BelongsTo
+    {
+        return $this->belongsTo(Vendor::class);
+    }
 
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function variants(): HasMany
+    {
+        return $this->hasMany(ProductVariant::class);
+    }
 }

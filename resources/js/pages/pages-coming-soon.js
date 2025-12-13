@@ -1,5 +1,5 @@
 /*
-Template Name: Tailwick - Admin & Dashboard Template
+Template Name: Primooo Chat - Admin & Dashboard Template
 Author: Themesdesign
 Version: 2.0.0
 Website: https://themesdesign.in/

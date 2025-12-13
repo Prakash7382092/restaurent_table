@@ -273,7 +273,7 @@
         <div class="p-4 flex border-t border-dashed border-default-900/10">
             <div class="flex w-full gap-4">
                 <button class="btn bg-default-150 grow" id="reset-layout" type="button">Reset</button>
-                <a class="btn bg-primary text-white grow" href="https://1.envato.market/tailwick-tailwind"
+                <a class="btn bg-primary text-white grow" href="https://1.envato.market/Primooo Chat-tailwind"
                     target="_blank">Buy Now</a>
             </div>
         </div>

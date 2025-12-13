@@ -366,7 +366,7 @@
                 <div aria-labelledby="hs-dropdown-with-icons" aria-orientation="vertical"
                      class="hs-dropdown-menu min-w-48" role="menu">
                     <div class="p-2">
-                        <h6 class="mb-2 text-default-500">Welcome to Tailwick</h6>
+                        <h6 class="mb-2 text-default-500">Welcome to Primooo Chat</h6>
                         <a class="flex gap-3" href="#!">
                             <div class="relative inline-block">
                                 <div class="rounded bg-default-200">
@@ -384,28 +384,18 @@
                     <div class="border-t border-t-default-200 -mx-2 my-2"></div>
                     <div class="flex flex-col gap-y-1">
                         <a class="flex items-center gap-x-3.5 py-1.5 font-medium px-3 text-default-600 hover:bg-default-150 rounded"
-                           href="{{ route('second', ['apps', 'mailbox']) }}">
-                            <i class="size-4" data-lucide="mail"></i>
-                            Inbox
-                            <span
-                                class="size-4.5 font-semibold bg-danger rounded text-white flex items-center justify-center text-xs">15</span>
-                        </a>
-                        <a class="flex items-center gap-x-3.5 py-1.5 font-medium px-3 text-default-600 hover:bg-default-150 rounded"
-                           href="{{ route('second', ['apps', 'chat']) }}">
-                            <i class="size-4" data-lucide="messages-square"></i>
-                            Chat
-                        </a>
-                        <a class="flex items-center gap-x-3.5 py-1.5 font-medium px-3 text-default-600 hover:bg-default-150 rounded"
-                           href="{{ route('second', ['pages', 'pricing']) }}">
-                            <i class="size-4" data-lucide="gem"></i>
-                            Upgrade Pro
+                           href="{{ route('vendor.dashboard') }}">
+                            <i class="size-4" data-lucide="layout-dashboard"></i>
+                            Dashboard
                         </a>
                         <div class="border-t border-default-200 -mx-2 my-1"></div>
-                        <a class="flex items-center gap-x-3.5 py-1.5 font-medium px-3 text-default-600 hover:bg-default-150 rounded"
-                           href="{{ route('second', ['auth', 'basic-logout']) }}">
-                            <i class="size-4" data-lucide="log-out"></i>
-                            Sign Out
-                        </a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="w-full flex items-center gap-x-3.5 py-1.5 font-medium px-3 text-default-600 hover:bg-default-150 rounded">
+                                <i class="size-4" data-lucide="log-out"></i>
+                                Sign Out
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

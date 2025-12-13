@@ -3,7 +3,7 @@
 <script>
     (function() {
         const html = document.documentElement;
-        const storageKey = "__TAILWICK_CONFIG__";
+        const storageKey = "__Primooo Chat_CONFIG__";
         const savedConfig = sessionStorage.getItem(storageKey);
 
         // Default config
@@ -59,8 +59,7 @@
     })();
 </script>
 
-
-
-
+@vite(['resources/js/vendor.js'])
+@vite(['resources/js/app.js'])
 
 @yield('scripts')

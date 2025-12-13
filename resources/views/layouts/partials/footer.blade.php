@@ -5,7 +5,7 @@
             <script>
                 document.write(new Date().getFullYear())
             </script>
-            © Tailwick
+            © Primooo Chat
         </div>
         <div class="md:flex hidden gap-2 item-center md:justify-end">
             Design &amp; Develop by<a class="text-primary" href="https://themesdesign.in/" target="_blank">Themesdesign</a>

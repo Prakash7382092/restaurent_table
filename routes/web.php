@@ -1,18 +1,27 @@
 <?php
 
+use App\Http\Controllers\vendor\AuthController;
+use App\Http\Controllers\vendor\DashboardController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\vendor\AuthController as VendorAuth;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Authentication Routes
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+});
 
-// Other route definitions..
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
-Route::prefix('vendor')->group(function () {
-    Route::get('/login', [VendorAuth::class, 'login'])->name('vendor.login');
-    Route::post('/login',[VendorAuth::class, 'check'])->name('vendor_login');
-    Route::get('/dashboard', [VendorAuth::class, 'Index'])->name('vendor.dashboard');
-    Route::get('/logout', [VendorAuth::class, 'logout'])->name('vendor.logout');
+Route::middleware(['auth'])->as('vendor.')->group(function () {
+    // Dashboard (Vendor)
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+});
+
+Route::middleware(['auth'])->as('admin.')->group(function () {
+    // Dashboard (Admin)
+    // Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 });

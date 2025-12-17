@@ -37,11 +37,13 @@
                     <span>Store Management</span>
                 </li>
                 <li class="menu-item">
-                    <a class="menu-link" href="{{ route('vendor.dashboard') }}">
+                    <a class="menu-link" href="{{ route('vendor.products_index') }}">
                         <span class="menu-icon"><i data-lucide="package"></i></span>
                         <div class="menu-text">Products</div>
                     </a>
                 </li>
+
+                
                 <li class="menu-item">
                     <a class="menu-link" href="{{ route('vendor.dashboard') }}">
                         <span class="menu-icon"><i data-lucide="shopping-cart"></i></span>

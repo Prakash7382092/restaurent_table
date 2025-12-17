@@ -18,9 +18,14 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(
             except: ['api/*'],
         );
-        $middleware->alias(
-            ['role' => RoleCheck::class]
-        );
+       $middleware->alias([
+            // existing
+            'role'   => \App\Http\Middleware\RoleCheck::class,
+
+            // ✅ ADD THIS
+            'vendor' => \App\Http\Middleware\VendorMiddleware::class,
+        ]);
+
 
     })
     ->withExceptions(function (Exceptions $exceptions): void {})->create();

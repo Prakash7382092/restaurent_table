@@ -1,51 +1,42 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\vendor;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Product;
 // CHANGED: required imports
 use Illuminate\Support\Facades\File;                     // CHANGED: needed for Str::slug()
-use Illuminate\Support\Str;           // CHANGED: create directories safely
+use Illuminate\Support\Str;   
+use Validator;
 
-// optional, not required but okay
 
 class ProductController extends Controller
 {
-    public function index()
+    //
+    public function Index()
     {
+        $categories = Category::all();
         $products = Product::all();
-
-        return response()->json($products);
+        
+       return view('vendor.products.index',compact('categories','products'));
     }
 
-    public function show($id)
-    {
-        $product = Product::find($id);
-        if (! $product) {
-            return response()->json(['message' => 'Product not found'], 404);
-        }
+     // Create a new product
+    public function store(Request $request){
+        echo "Update method called";        
+         $vendor_id = $request->vendor_id;
+         $name = $request->name;
+         $short_description = $request->short_description;
+         $description = $request->description;
+         $type = $request->type;
+         $slug = $request->slug;
+         $sku = $request->sku;
+         $category_id = $request->category_id;
+         $total_allowed_qty = $request->total_allowed_qty;
 
-        return response()->json($product);
-    }
-
-    // Create a new product
-    public function store(Request $request)
-    {
-        $request->validate([
-            'vendor_id' => 'required|integer',
-            'name' => 'required|string',
-            'short_description' => 'nullable|string',
-            'description' => 'nullable|string',
-            'type' => 'nullable|string',
-            'slug' => 'nullable|string',
-            'sku' => 'required|string',
-            'category_id' => 'required|integer',
-            'total_allowed_qty' => 'required|integer',
-            'featured_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-        ]);
-        // Prepare folder name: slug of product name
+            // Prepare folder name: slug of product name
         $product_name = Str::slug($request->name);
 
         // base folder under public/
@@ -66,7 +57,9 @@ class ProductController extends Controller
             $file->move(public_path('products/'.$product_name), $imageName); // 🔥 Image gets saved
         }
 
-        $images_list = [];
+        // Create the product
+
+         $images_list = [];
 
         // NOTE: Postman must send files as images[] (multiple rows)
         if ($request->hasFile('images')) {
@@ -89,7 +82,7 @@ class ProductController extends Controller
             }
         }
 
-        $product = [
+         $product = [
             'vendor_id' => $request->vendor_id,
             'name' => $request->name,
             'short_description' => $request->short_description,
@@ -103,6 +96,7 @@ class ProductController extends Controller
             'featured_image' => $imageName,
             'images' => $images_list,
         ];
+        print_r($product);
 
         Product::insert([
             'vendor_id' => $request->vendor_id,
@@ -117,41 +111,42 @@ class ProductController extends Controller
             'featured_image' => $imageName,
             'images' => json_encode($images_list),
         ]);
-
-        // Create the product
-
-        return response()->json([
-            'message' => 'Product Created successfully',
-            'product' => $product,
-        ], 200);
+        
+        flash('success', 'Product created successfully!');
+        return redirect()->route('vendor.products_index');
+        
+        // Create the product 
 
     }
 
-    // Update product
-
-    public function update(Request $request, $id)
+    public function Edit($id)
     {
+        //        
+        $categories = Category::all();
+        $product_data = Product::where('id', $id)->first();        
+       
+        return view('vendor.products.edit', compact('product_data', 'categories'));
+    }
 
-        $product = Product::where('id', $id)->first();
-        $vendorid = $product->vendor_id;
-        $oimages = $product->images;
-        $ofeatured_image = $product->featured_image;
-        $product_name = $product->product_name; // already saved on insert
-        $folderPath = public_path("products/{$product_name}/");
+    public function Update(Request $request)
+    {
+         echo "Update method called";        
+         $vendor_id = $request->vendor_id;
+         $name = $request->name;
+         $short_description = $request->short_description;
+         $description = $request->description;
+         $type = $request->type;
+         $slug = $request->slug;
+         $sku = $request->sku;
+         $category_id = $request->category_id;
+         $total_allowed_qty = $request->total_allowed_qty;
+         $ofeatured_image = $request->ofeatured_image;
+         $oimages = $request->oimages;
+         $id = $request->idi;
 
-        $request->validate([
-            'vendor_id' => 'required|integer',
-            'name' => 'required|string',
-            'short_description' => 'nullable|string',
-            'description' => 'nullable|string',
-            'type' => 'nullable|string',
-            'slug' => 'nullable|string',
-            'sku' => 'required|string',
-            'category_id' => 'required|integer',
-            'total_allowed_qty' => 'required|integer',
-            'featured_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-        ]);
-        // Prepare folder name: slug of product name
+            // Update the product
+
+          // Prepare folder name: slug of product name
         $product_name = Str::slug($request->name);
 
         // base folder under public/
@@ -179,9 +174,7 @@ class ProductController extends Controller
 
         // NOTE: Postman must send files as images[] (multiple rows)
         if ($request->hasFile('images')) {
-
             $oldImages = json_decode($product->images, true);
-
             if (is_array($oldImages)) {
                 foreach ($oldImages as $img) {
                     $fullPath = $folderPath.$img;
@@ -195,45 +188,26 @@ class ProductController extends Controller
             $images_list = [];
 
             foreach ($request->file('images') as $file) {
-
-                $image_dir = $baseFolder; // images stored in public/products/{slug}/
+                $image_dir = $baseFolder; 
 
                 // ensure exists
                 if (! File::exists($image_dir)) {
                     File::makeDirectory($image_dir, 0755, true);
                 }
-
                 $image_name = time().'_'.uniqid().'.'.$file->getClientOriginalExtension();
-
                 $file->move($image_dir, $image_name);
 
                 // store relative path
                 $images_list[] = $image_name;
             }
-
             $images_list = json_encode($images_list);
 
         } else {
             $images_list = $oimages; // keep existing images
             // Delete old images one by one
-
         }
 
-        $product = [
-            'vendor_id' => $request->vendor_id,
-            'name' => $request->name,
-            'short_description' => $request->short_description,
-            'description' => $request->description,
-            'type' => $request->type,
-            'slug' => $request->slug ? Str::slug($request->slug) : Str::slug($request->name),
-            'sku' => $request->sku,
-            'category_id' => $request->category_id,
-            'total_allowed_qty' => $request->total_allowed_qty,
-            'product_name' => $product_name,
-            'vendor_id' => $vendorid,
-        ];
-
-        Product::where('id', $id)->update([
+         Product::where('id', $id)->update([
             'vendor_id' => $request->vendor_id,
             'name' => $request->name,
             'short_description' => $request->short_description,
@@ -246,59 +220,21 @@ class ProductController extends Controller
             'featured_image' => $imageName,
             'images' => $images_list,
         ]);
-
-        // Create the product
-
-        return response()->json([
-            'message' => 'Product Updated successfully',
-            'product' => $product,
-        ], 200);
-
+        flash('success', 'Product updated successfully!');
+        return redirect()->route('vendor.products_index');
     }
 
-    // Delte Product
-    public function destroy($id)
-    {
-        $product = Product::find($id);
 
-        if (! $product) {
-            return response()->json(['message' => 'Product not found'], 404);
-        }
-
-        // Use correct column name
-        $product_name = $product->name;
-
-        $folderPath = public_path('products/'.$product_name);
-
-        /* DELETE FEATURED IMAGE */
-        $featuredImage = $product->featured_image;
-        $featuredImagePath = $folderPath.'/'.$featuredImage;
-
-        if ($featuredImage && File::exists($featuredImagePath)) {
-            unlink($featuredImagePath);
-        }
-
-        /* DELETE EXTRA IMAGES */
-        $images = json_decode($product->images, true);
-
-        if (is_array($images)) {
-            foreach ($images as $img) {
-                $imgPath = $folderPath.'/'.$img;
-                if (File::exists($imgPath)) {
-                    unlink($imgPath);
-                }
-            }
-        }
-
-        /* DELETE product folder */
-        if (File::exists($folderPath)) {
-            rmdir($folderPath);
-        }
-
-        /* DELETE DATA FROM DB */
-        $product->delete();
-
-        return response()->json(['message' => 'Product deleted successfully']);
+    public function view($id){
+        //
+        $product = Product::where('id', $id)->first();
+        return view('vendor.products.view', compact('product'));
     }
-    
+
+    public function Delete($id){
+        //
+        Product::where('id', $id)->delete();
+        flash('success', 'Product deleted successfully!');
+        return redirect()->route('vendor.products_index');
+    }
 }

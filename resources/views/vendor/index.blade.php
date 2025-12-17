@@ -308,7 +308,7 @@
                                                     </span>
                                                 @endif
                                             </td>
-                                            <td class="px-3.5 py-3 text-xs">{{ $product->created_at->diffForHumans() }}</td>
+                                            <td class="px-3.5 py-3 text-xs"></td>
                                         </tr>
                                         @empty
                                         <tr>

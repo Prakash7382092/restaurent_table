@@ -6,19 +6,29 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Vendor;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Session;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $vendor = Vendor::where('user_id', auth()->id())->first();
-
+        $vendor = Vendor::where('user_id', auth()->id())->first();  
+        $user = User::where('id', $vendor->user_id)->first();
+       
+                Session::put('vendor_name', $user->name);
+                 Session::put('vendor_id', $vendor->id);
+                 Session::put('vendor_email', $user->email);
+        
+         
         if (!$vendor) {
             return redirect()->route('login')->with('error', 'No vendor account found.');
         }
 
-        // Get vendor statistics
+       // Get vendor statistics
         $stats = [
             'total_products' => Product::where('vendor_id', $vendor->id)->count(),
             'active_products' => Product::where('vendor_id', $vendor->id)->where('is_active', true)->count(),
@@ -67,4 +77,8 @@ class DashboardController extends Controller
 
         return view('vendor.index', compact('stats', 'recentProducts', 'recentOrders', 'vendor'));
     }
+
+    
+
+    
 }

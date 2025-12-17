@@ -51,7 +51,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a class="menu-link" href="{{ route('vendor.dashboard') }}">
+                    <a class="menu-link" href="{{ route('vendor.categories') }}">
                         <span class="menu-icon"><i data-lucide="tags"></i></span>
                         <div class="menu-text">Categories</div>
                     </a>

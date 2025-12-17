@@ -18,7 +18,7 @@
                             hover:bg-green-700 focus:outline-none focus:ring-2
                             focus:ring-green-500 focus:ring-offset-2
                             transition">
-                        Add New Product
+                        Add New Category
                     </button>
                 </div>
 
@@ -32,7 +32,7 @@
                         <!-- Modal Header -->
                         <div class="flex items-center justify-between px-5 py-4 border-b">
                             <h5 class="text-lg font-semibold">
-                                Add New Product
+                                Add New Category
                             </h5>
 
                             <!-- Close Button -->
@@ -46,7 +46,7 @@
                         <div class="px-6 py-4 max-h-[70vh] overflow-y-auto">
                             <!-- Example Input -->
                             <div>
-                                <form  id="productForm" action="{{ route('vendor.products_store') }}" method="POST"  enctype="multipart/form-data">            
+                                <form  id="productForm" action="{{ route('vendor.category_store') }}" method="POST"  enctype="multipart/form-data">            
                                     @csrf                                    
                                         <input type="hidden"
                                             class="w-full rounded-md border-gray-300
@@ -55,89 +55,38 @@
 
 
                                         <label class="block text-sm font-medium text-gray-700 mb-1">
-                                            Product Name
+                                            Parent ID
                                         </label>
                                         <input type="text"
                                             class="w-full rounded-md border-gray-300
-                                                    focus:border-green-500 focus:ring-green-500" name="name"
-                                            placeholder="Enter product name" value="" required>
-
-                                        <label class="block text-sm font-medium text-gray-700 mb-1"> Short Description</label>
-                                        <textarea rows="3"
-                                            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-green-500 focus:ring-green-500 focus:outline-none"
-                                            placeholder="Enter product Description"
-                                            name="short_description" required></textarea>
-
-
+                                                    focus:border-green-500 focus:ring-green-500" name="parent_id"
+                                            placeholder="Enter Name" value="" required>
 
                                         <label class="block text-sm font-medium text-gray-700 mb-1">
-                                            Description
-                                        </label>
-                                        <textarea rows="3"
-                                            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-green-500 focus:ring-green-500 focus:outline-none"
-                                            placeholder="Enter product Description"
-                                            name="description" required></textarea>
-
-
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                                            Product Tyoe
+                                            Category Name
                                         </label>
                                         <input type="text"
                                             class="w-full rounded-md border-gray-300
-                                                    focus:border-green-500 focus:ring-green-500" name="type"
-                                            placeholder="Enter product type" value="">
+                                                    focus:border-green-500 focus:ring-green-500" name="category_name"
+                                            placeholder="Enter Name" value="" required>
 
-                                        
                                         <label class="block text-sm font-medium text-gray-700 mb-1">
-                                            Product Slug
+                                            Category Slug
                                         </label>
                                         <input type="text"
                                             class="w-full rounded-md border-gray-300
-                                                    focus:border-green-500 focus:ring-green-500"
-                                            placeholder="Enter product Slug" name="slug" value="">
+                                                    focus:border-green-500 focus:ring-green-500" name="category_slug"
+                                            placeholder="Enter Slug" value="" required>
 
                                         <label class="block text-sm font-medium text-gray-700 mb-1">
-                                            Product Sku
+                                            Position
                                         </label>
                                         <input type="text"
                                             class="w-full rounded-md border-gray-300
-                                                    focus:border-green-500 focus:ring-green-500"
-                                            placeholder="Enter product Sku" name="sku" value="">
+                                                    focus:border-green-500 focus:ring-green-500" name="position"
+                                            placeholder="Enter Position" value="" required>                          
 
-
-
-                                        <label class="block text-sm font-medium text-gray-700 mb-1"> Category</label>
-                                        <select name="category_id" class="w-full rounded-md border-gray-300">
-                                            @foreach($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                            @endforeach
-                                        </select>
-
-
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                                            Total Allowed Quantity
-                                        </label>
-                                        <input type="number" 
-                                            class="w-full rounded-md border-gray-300
-                                                    focus:border-green-500 focus:ring-green-500" name="total_allowed_qty"
-                                            placeholder="Enter Total Allowed Quantity" value="">
-                                            <br>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                                            Featured Image
-                                        </label>
-                                        <input type="file" class="w-full rounded-md border-gray-300 focus:border-green-500 focus:ring-green-500 border-2 border-[2px] p-2" name="featured_image"
-                                            placeholder="Enter Total Allowed Quantity" value="" name="featured_image">
-                                        
-                                            
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                                            Images
-                                        </label>
-                                        <input type="file"
-                                            class="w-full rounded-md border-gray-300
-                                                    focus:border-green-500 focus:ring-green-500  border-2 border-[2px] p-2" name="images[]"
-                                            placeholder="Enter Total Allowed Quantity" value="" multiple required>
-
-                                        <input type="submit" value="Add Product Variant" class="w-full mt-4 px-4 py-2 bg-green-600 text-white text-center font-semibold rounded-md hover:bg-green-700 transition cursor-pointer">
+                                        <input type="submit" value="Add Category" class="w-full mt-4 px-4 py-2 bg-green-600 text-white text-center font-semibold rounded-md hover:bg-green-700 transition cursor-pointer">
                                 </form>                 
 
                             </div>
@@ -167,34 +116,32 @@
                                 <table class="min-w-full divide-y divide-default-200">
                                     <thead class="bg-default-150">
                                         <tr class="text-sm font-normal text-default-700">
-                                            <th class="px-3.5 py-3 text-start">Product Name</th>
-                                            <th class="px-3.5 py-3 text-start">SKU</th>
-                                            <th class="px-3.5 py-3 text-start">Type</th>
+                                            <th class="px-3.5 py-3 text-start">Parent id </th>
+                                            <th class="px-3.5 py-3 text-start">Name</th>                                            
                                             <th class="px-3.5 py-3 text-start">Slug</th>
-                                             <th class="px-3.5 py-3 text-start">view</th>
+                                            <th class="px-3.5 py-3 text-start">Position</th>
+                                         
                                             <th class="px-3.5 py-3 text-start">Edit</th>
                                             <th class="px-3.5 py-3 text-start">Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-default-200">
                                     
-                                      @foreach($products as $product)
+                                      @foreach($categories as $category)
                                         <tr class="text-default-800 font-normal text-sm whitespace-nowrap">
-                                                <td class="px-3.5 py-3 text-primary">#{{ $product->name }}</td>
-                                                <td class="px-3.5 py-3">{{ $product->sku }}</td>
-                                                <td class="px-3.5 py-3">{{ $product->type }}</td>
-                                                    <td class="px-3.5 py-3">{{ $product->slug }}</td>
-                                                <td><a href="{{ route('vendor.view_product', $product->id) }}" class="text-green-500 hover:text-green-700">
-                                                        <i class="size-4" data-lucide="eye"></i>
-                                                    </a></td>
+                                                <td class="px-3.5 py-3 text-primary">#{{ $category->parent_id  }}</td>
+                                                <td class="px-3.5 py-3">{{ $category->name  }}</td>
+                                                <td class="px-3.5 py-3">{{ $category->slug }}</td>
+                                                    <td class="px-3.5 py-3">{{ $category->position }}</td>
+                        
                                                     
                                                 <td class="px-3.5 py-3">
-                                                    <a href="{{ route('vendor.edit_product', $product->id) }}" class="text-blue-500 hover:text-blue-700">
+                                                    <a href="{{ route('vendor.edit_category', $category->id) }}" class="text-blue-500 hover:text-blue-700">
                                                         <i class="size-4" data-lucide="edit"></i>
                                                     </a>
                                                 </td>
                                                 <td class="px-3.5 py-3">
-                                                    <a href="{{ route('vendor.products_delete', $product->id) }}" class="text-red-500 hover:text-red-700" onclick="return confirm('Are you sure you want to delete this product?');">
+                                                    <a href="{{ route('vendor.category_delete', $category->id) }}" class="text-red-500 hover:text-red-700" onclick="return confirm('Are you sure you want to delete this product?');">
                                                         <i class="size-4" data-lucide="trash-2"></i>
                                                     </a>
                                                 </td>
@@ -227,74 +174,39 @@
             document.getElementById('productModal').classList.add('hidden');
         }
     </script>   
-    @section('scripts')
 
+    @section('scripts')
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 <script src="{{ asset('vendor/js/script.js')}}"></script>
-<script>
+    <script>
     $(document).ready(function () {
         $("#productForm").validate({
 
             ignore: [],
 
             rules: {
-                name: {
+                parent_id: {
                     required: true,
-                    minlength: 3
+                    minlength: 1
                 },
-                
-
-                short_description: {
+                category_name: {
                     required: true                   
                 },
-
-
-                description: {
+                category_slug: {
                     required: true,                
                 },
-
-                category_id: {
+                position: {
                     required: true
-                },
-
-                sku: {
-                    required: true
-                },
-
-                slug: {
-                    required: true
-                },
-
-                type: {
-                    required: true
-                },
-
-                featured_image: {
-                    required: true
-                },
-
-                total_allowed_qty: {
-                    required: true,
-                    number: true
-                },
-
-                "images[]": {
-                    required: true
-                }
+                },                
             },
 
             messages: {
-                name: "Product name is required",
-                short_description: "Short description is required",
-                description: "Description is required",
-                category_id: "Please select a category",
-                sku: "SKU is required",
-                slug: "Slug is required",
-                type: "Product type is required",
-                featured_image: "Featured image is required",
-                total_allowed_qty: "Total allowed quantity is required",
-                "images[]": "Please upload product images"
+                parent_id: "Parent ID name is required",
+                category_name: "Category name is required",
+                category_slug: "Category name is required",
+                position: "Category name id is requured",              
+                
             },
 
             errorElement: "span",
@@ -325,6 +237,9 @@
 
  
 </script>
+
+
+
 
 @endsection
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductVariant;
 // CHANGED: required imports
 use Illuminate\Support\Facades\File;                     // CHANGED: needed for Str::slug()
 use Illuminate\Support\Str;   
@@ -227,13 +228,16 @@ class ProductController extends Controller
 
     public function view($id){
         //
+        $categories = Category::all();
         $product = Product::where('id', $id)->first();
-        return view('vendor.products.view', compact('product'));
+        $product_variant = ProductVariant::where('product_id',$id)->get();
+        return view('vendor.products.view', compact('product','categories','product_variant'));
     }
 
     public function Delete($id){
         //
         Product::where('id', $id)->delete();
+        ProductVariant::where('product_id',$id)->delete();
         flash('success', 'Product deleted successfully!');
         return redirect()->route('vendor.products_index');
     }

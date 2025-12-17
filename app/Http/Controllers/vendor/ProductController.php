@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariant;
+
 // CHANGED: required imports
 use Illuminate\Support\Facades\File;                     // CHANGED: needed for Str::slug()
 use Illuminate\Support\Str;   
@@ -236,7 +237,49 @@ class ProductController extends Controller
 
     public function Delete($id){
         //
+        
+        
+
+         $product = Product::find($id);
+
+        if (! $product) {
+            flash('error', 'Product deleted successfully!');
+            return redirect()->route('vendor.products_index');
+        }
+
+        // Use correct column name
+        $product_name = $product->name;
+
+        $folderPath = public_path('products/'.$product_name);
+
+        /* DELETE FEATURED IMAGE */
+        $featuredImage = $product->featured_image;
+        $featuredImagePath = $folderPath.'/'.$featuredImage;
+
+        if ($featuredImage && File::exists($featuredImagePath)) {
+            unlink($featuredImagePath);
+        }
+
+        /* DELETE EXTRA IMAGES */
+        $images = json_decode($product->images, true);
+
+        if (is_array($images)) {
+            foreach ($images as $img) {
+                $imgPath = $folderPath.'/'.$img;
+                if (File::exists($imgPath)) {
+                    unlink($imgPath);
+                }
+            }
+        }
+
+        /* DELETE product folder */
+        if (File::exists($folderPath)) {
+            rmdir($folderPath);
+        }
+
+        /* DELETE DATA FROM DB */
         Product::where('id', $id)->delete();
+        $product->delete();
         ProductVariant::where('product_id',$id)->delete();
         flash('success', 'Product deleted successfully!');
         return redirect()->route('vendor.products_index');

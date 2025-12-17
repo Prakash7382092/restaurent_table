@@ -17,6 +17,8 @@ class DashboardController extends Controller
     public function index()
     {
         $vendor = Vendor::where('user_id', auth()->id())->first();  
+          $vendor_id = $vendor->id;
+
         $user = User::where('id', $vendor->user_id)->first();
        
                 Session::put('vendor_name', $user->name);

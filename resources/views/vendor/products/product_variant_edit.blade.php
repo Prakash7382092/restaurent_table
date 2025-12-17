@@ -25,8 +25,7 @@
                                 class="w-full rounded-md border-gray-300 focus:border-green-500 focus:ring-green-500"
                                 name="vendor_id"
                                 placeholder="Enter product name"
-                                value="{{ Session::get('vendor_id') }}"
-                            />
+                                value="{{ Session::get('vendor_id') }}"/>
 
                             <input
                                 type="hidden"

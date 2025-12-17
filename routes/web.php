@@ -43,7 +43,7 @@ Route::middleware(['auth', 'vendor'])
         Route::post('/products', [VendorProductController::class, 'store'])->name('products_store');
         Route::get('/products/edit/{id}', [VendorProductController::class, 'Edit'])->name('edit_product');
         Route::post('/products/update', [VendorProductController::class, 'Update']) ->name('products_update');
-        Route::post('/products/delete/{id}', [VendorProductController::class, 'Delete'])->name('products_delete');
+        Route::get('/products/delete/{id}', [VendorProductController::class, 'Delete'])->name('products_delete');
         Route::get('/products/view/{id}', [VendorProductController::class, 'View']) ->name('view_product');  
         
         

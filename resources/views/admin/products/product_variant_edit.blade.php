@@ -1,5 +1,5 @@
-@extends('vendor.layouts.vertical', ['title' => 'Dashboard']) @section('css') @endsection @section('content')
-@include('vendor.layouts.partials/page-title', ['subtitle' => 'Vendor', 'title' => 'Dashboard'])
+@extends('admin.layouts.vertical', ['title' => 'Dashboard']) @section('css') @endsection @section('content')
+@include('admin.layouts.partials/page-title', ['subtitle' => 'Vendor', 'title' => 'Dashboard'])
 
 <div class="grid lg:grid-cols-4 grid-cols-4 gap-5 mb-5">
     <div class="lg:col-span-4 col-span-1">

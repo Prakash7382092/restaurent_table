@@ -1,10 +1,10 @@
-@extends('vendor.layouts.vertical', ['title' => 'Dashboard'])
+@extends('admin.layouts.vertical', ['title' => 'Dashboard'])
 
 @section('css')
 @endsection
 
 @section('content')
-    @include('vendor.layouts.partials/page-title', ['subtitle' => 'Vendor', 'title' => 'Dashboard'])
+    @include('admin.layouts.partials/page-title', ['subtitle' => 'Admin', 'title' => 'Dashboard'])
 
     <div class="grid lg:grid-cols-3 grid-cols-1 gap-5 mb-5">
         <div class="lg:col-span-2 col-span-1">
@@ -223,10 +223,7 @@
                         <div class="flex items-center justify-center rounded-md size-12 bg-primary/10">
                             <i class="size-6 text-primary" data-lucide="store"></i>
                         </div>
-                        <div class="text-sm">
-                            <p class="mb-1 text-default-500">Store Name</p>
-                            <h6 class="font-semibold text-default-800">{{ $vendor->store_name }}</h6>
-                        </div>
+                       
                     </div>
                     <div class="flex items-center gap-3 mb-4">
                         <div class="flex items-center justify-center rounded-md size-12 bg-success/10">
@@ -280,7 +277,8 @@
                                             <td class="px-3.5 py-3">
                                                 <div class="flex items-center gap-3">
                                                     @if($product->featured_image)
-                                                        <img src="{{ $product->featured_image }}" alt="{{ $product->name }}" class="size-10 rounded object-cover">
+                                                        <img src="{{ asset('products/'.$product->name.'/'.$product->featured_image) }}" alt="{{ $product->name }}" class="size-10 rounded object-cover">
+
                                                     @else
                                                         <div class="size-10 rounded bg-default-200 flex items-center justify-center">
                                                             <i class="size-5 text-default-500" data-lucide="image"></i>

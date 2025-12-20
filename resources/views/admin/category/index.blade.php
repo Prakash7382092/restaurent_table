@@ -1,10 +1,10 @@
-@extends('vendor.layouts.vertical', ['title' => 'Dashboard'])
+@extends('admin.layouts.vertical', ['title' => 'Dashboard'])
 
 @section('css')
 @endsection
 
 @section('content')
-    @include('vendor.layouts.partials/page-title', ['subtitle' => 'Vendor', 'title' => 'Dashboard'])  
+    @include('admin.layouts.partials/page-title', ['subtitle' => 'Admin', 'title' => 'Category'])  
 
     <div class="grid lg:grid-cols-4 grid-cols-4 gap-5 mb-5">
 
@@ -46,7 +46,7 @@
                         <div class="px-6 py-4 max-h-[70vh] overflow-y-auto">
                             <!-- Example Input -->
                             <div>
-                                <form  id="productForm" action="{{ route('vendor.category_store') }}" method="POST"  enctype="multipart/form-data">            
+                                <form  id="productForm" action="{{ route('admin.category_store') }}" method="POST"  enctype="multipart/form-data">            
                                     @csrf                                    
                                         <input type="hidden"
                                             class="w-full rounded-md border-gray-300
@@ -136,12 +136,12 @@
                         
                                                     
                                                 <td class="px-3.5 py-3">
-                                                    <a href="{{ route('vendor.edit_category', $category->id) }}" class="text-blue-500 hover:text-blue-700">
+                                                    <a href="{{ route('admin.edit_category', $category->id) }}" class="text-blue-500 hover:text-blue-700">
                                                         <i class="size-4" data-lucide="edit"></i>
                                                     </a>
                                                 </td>
                                                 <td class="px-3.5 py-3">
-                                                    <a href="{{ route('vendor.category_delete', $category->id) }}" class="text-red-500 hover:text-red-700" onclick="return confirm('Are you sure you want to delete this product?');">
+                                                    <a href="{{ route('admin.category_delete', $category->id) }}" class="text-red-500 hover:text-red-700" onclick="return confirm('Are you sure you want to delete this product?');">
                                                         <i class="size-4" data-lucide="trash-2"></i>
                                                     </a>
                                                 </td>
@@ -237,9 +237,6 @@
 
  
 </script>
-
-
-
 
 @endsection
 

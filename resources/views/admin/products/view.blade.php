@@ -1,15 +1,14 @@
-@extends('vendor.layouts.vertical', ['title' => 'Dashboard'])
+@extends('admin.layouts.vertical', ['title' => 'Dashboard'])
 
 @section('css')
 @endsection
 
 @section('content')
-    @include('vendor.layouts.partials/page-title', ['subtitle' => 'Vendor', 'title' => 'Dashboard'])  
+    @include('admin.layouts.partials/page-title', ['subtitle' => 'Vendor', 'title' => 'Dashboard'])  
 
     <div class="grid lg:grid-cols-4 grid-cols-4 gap-5 mb-5">
-
         <div class="lg:col-span-4 col-span-1">
-            <div class="card">               
+            <div class="card">    
                 
                 <div class="card-header">
                     <h6 class="card-title">Recent Products</h6>                    
@@ -131,7 +130,7 @@
                         <h6 class="card-title"> Product Variant </h6>
                         
                                            
-                        <a class="btn btn-sm border-0 text-primary/90 hover:text-primary" href="{{ route('vendor.dashboard') }}">
+                        <a class="btn btn-sm border-0 text-primary/90 hover:text-primary" href="{{ route('admin.dashboard') }}">
                             View All <i class="ms-1 size-4" data-lucide="move-right"></i>
                         </a>
                     </div>
@@ -166,7 +165,7 @@
                                                 <div class="px-6 py-4 max-h-[70vh] overflow-y-auto">
                                                     <!-- Example Input -->
                                                     <div>
-                                                        <form  id="productForm" action="{{ route('vendor.product_variant_store') }}" method="POST"  enctype="multipart/form-data">            
+                                                        <form  id="productForm" action="{{ route('admin.product_variant_store') }}" method="POST"  enctype="multipart/form-data">            
                                                             @csrf                                    
                                                                 <input type="hidden"
                                                                     class="w-full rounded-md border-gray-300
@@ -316,12 +315,12 @@
                                         
                                                     
                                                 <td class="px-3.5 py-3">
-                                                    <a href="{{route('vendor.product_variant_edit', $product->id)}}" class="text-blue-500 hover:text-blue-700">
+                                                    <a href="{{route('admin.product_variant_edit', $product->id)}}" class="text-blue-500 hover:text-blue-700">
                                                         <i class="size-4" data-lucide="edit"></i>
                                                     </a>
                                                 </td>
                                                 <td class="px-3.5 py-3">
-                                                    <a href="{{route('vendor.product_variant_delete', $product->id)}}" class="text-red-500 hover:text-red-700" onclick="return confirm('Are you sure you want to delete this product?');">
+                                                    <a href="{{route('admin.product_variant_delete', $product->id)}}" class="text-red-500 hover:text-red-700" onclick="return confirm('Are you sure you want to delete this product?');">
                                                         <i class="size-4" data-lucide="trash-2"></i>
                                                     </a>
                                                 </td>

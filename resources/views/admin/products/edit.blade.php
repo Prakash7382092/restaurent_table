@@ -1,10 +1,10 @@
-@extends('vendor.layouts.vertical', ['title' => 'Dashboard'])
+@extends('admin.layouts.vertical', ['title' => 'Dashboard'])
 
 @section('css')
 @endsection
 
 @section('content')
-    @include('vendor.layouts.partials/page-title', ['subtitle' => 'Vendor', 'title' => 'Dashboard'])  
+    @include('admin.layouts.partials/page-title', ['subtitle' => 'Vendor', 'title' => 'Dashboard'])  
 
     <div class="grid lg:grid-cols-4 grid-cols-4 gap-5 mb-5">
 
@@ -12,11 +12,7 @@
             <div class="card">
                 <div class="card-header">
                   
-                </div>
-
-              
-
-                
+                </div>                
                 <div class="card-header">
                     <h6 class="card-title">Recent Products</h6>
                     
@@ -27,7 +23,7 @@
                 <div class="flex flex-col">
                     <div class="flex items-center justify-center min-h-screen bg-gray-50">
                         <div class="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
-                            <form id="productForm" action="{{ route('vendor.products_update') }}" method="POST" enctype="multipart/form-data">            
+                            <form id="productForm" action="{{ route('admin.products_update') }}" method="POST" enctype="multipart/form-data">            
                                 @csrf
 
                                  <input type="hidden" name="idi" value="{{$product_data->id}}">

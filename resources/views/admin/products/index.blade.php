@@ -1,10 +1,10 @@
-@extends('vendor.layouts.vertical', ['title' => 'Dashboard'])
+@extends('admin.layouts.vertical', ['title' => 'Dashboard'])
 
 @section('css')
 @endsection
 
 @section('content')
-    @include('vendor.layouts.partials/page-title', ['subtitle' => 'Vendor', 'title' => 'Dashboard'])  
+    @include('admin.layouts.partials/page-title', ['subtitle' => 'Admin', 'title' => 'Dashboard'])  
 
     <div class="grid lg:grid-cols-4 grid-cols-4 gap-5 mb-5">
 
@@ -46,7 +46,7 @@
                         <div class="px-6 py-4 max-h-[70vh] overflow-y-auto">
                             <!-- Example Input -->
                             <div>
-                                <form  id="productForm" action="{{ route('vendor.products_store') }}" method="POST"  enctype="multipart/form-data">            
+                                <form  id="productForm" action="{{ route('admin.products_store') }}" method="POST"  enctype="multipart/form-data">            
                                     @csrf                                    
                                         <input type="hidden"
                                             class="w-full rounded-md border-gray-300
@@ -172,6 +172,7 @@
                                             <th class="px-3.5 py-3 text-start">Type</th>
                                             <th class="px-3.5 py-3 text-start">Slug</th>
                                              <th class="px-3.5 py-3 text-start">view</th>
+                                            <th class="px-3.5 py-3 text-start">Status</th>
                                             <th class="px-3.5 py-3 text-start">Edit</th>
                                             <th class="px-3.5 py-3 text-start">Delete</th>
                                         </tr>
@@ -184,18 +185,34 @@
                                                 <td class="px-3.5 py-3">{{ $product->sku }}</td>
                                                 <td class="px-3.5 py-3">{{ $product->type }}</td>
                                                     <td class="px-3.5 py-3">{{ $product->slug }}</td>
-                                                <td><a href="{{ route('vendor.view_product', $product->id) }}" class="text-green-500 hover:text-green-700">
+                                                <td><a href="{{ route('admin.view_product', $product->id) }}" class="text-green-500 hover:text-green-700">
                                                         <i class="size-4" data-lucide="eye"></i>
                                                     </a>
                                                 </td>
+
+                                                <td>
+                                                    @if($product->is_approved!='1')
+                                                    <a href="{{route('admin.products_approve',$product->id)}}" class="px-3 py-1 text-sm font-medium text-white bg-green-600 rounded hover:bg-green-700">
+                                                       Approve
+                                                    </a>
+                                                    @endif
+
+                                                  
+                                                     @if($product->is_approved!='0')
+                                                      <a href="{{route('admin.products_reject',$product->id)}}" class="px-3 py-1 text-sm font-medium text-white bg-red-600 rounded hover:bg-green-700">
+                                                       Reject
+                                                    </a>
+                                                    @endif                                                 
+                                                </td>
                                                     
                                                 <td class="px-3.5 py-3">
-                                                    <a href="{{ route('vendor.edit_product', $product->id) }}" class="text-blue-500 hover:text-blue-700">
+                                                    <a href="{{ route('admin.edit_product', $product->id) }}" class="text-blue-500 hover:text-blue-700">
                                                         <i class="size-4" data-lucide="edit"></i>
                                                     </a>
                                                 </td>
+                                                
                                                 <td class="px-3.5 py-3">
-                                                    <a href="{{ route('vendor.products_delete', $product->id) }}" class="text-red-500 hover:text-red-700" onclick="return confirm('Are you sure you want to delete this product?');">
+                                                    <a href="{{ route('admin.products_delete', $product->id) }}" class="text-red-500 hover:text-red-700" onclick="return confirm('Are you sure you want to delete this product?');">
                                                         <i class="size-4" data-lucide="trash-2"></i>
                                                     </a>
                                                 </td>

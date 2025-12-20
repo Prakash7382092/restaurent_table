@@ -24,6 +24,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
             // ✅ ADD THIS
             'vendor' => \App\Http\Middleware\VendorMiddleware::class,
+             // ✅ ADD THIS
+            'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
 
 

@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariant;
-
+use App\Models\CategoryAttribute;
+use App\Models\AttributeValue;
+use App\Models\Attribute;
 // CHANGED: required imports
 use Illuminate\Support\Facades\File;                     // CHANGED: needed for Str::slug()
 use Illuminate\Support\Str;   
@@ -125,7 +127,8 @@ class ProductController extends Controller
     {
         //        
         $categories = Category::all();
-        $product_data = Product::where('id', $id)->first();        
+        $product_data = Product::where('id', $id)->first();   
+             
        
         return view('vendor.products.edit', compact('product_data', 'categories'));
     }
@@ -193,7 +196,7 @@ class ProductController extends Controller
                 $image_dir = $baseFolder; 
 
                 // ensure exists
-                if (! File::exists($image_dir)) {
+                if (! File::exists($image_dibr)) {
                     File::makeDirectory($image_dir, 0755, true);
                 }
                 $image_name = time().'_'.uniqid().'.'.$file->getClientOriginalExtension();
@@ -228,19 +231,19 @@ class ProductController extends Controller
 
 
     public function view($id){
-        //
         $categories = Category::all();
-        $product = Product::where('id', $id)->first();
-        $product_variant = ProductVariant::where('product_id',$id)->get();
-        return view('vendor.products.view', compact('product','categories','product_variant'));
+         $product = Product::findOrFail($id);
+        $category_id = $product->category_id;
+        $attributeIds = CategoryAttribute::where('category_id', $category_id)->pluck('attribute_id');      
+        $attributeValues = AttributeValue::whereIn('attribute_id', $attributeIds) ->get();    
+        $attributes = Attribute::whereIn('id', $attributeIds)->get();
+        $product_variant = ProductVariant::where('product_id', $id)->get();    
+        return view('vendor.products.view', compact('product','categories','product_variant','attributes','attributeValues','attributeIds'));
     }
 
     public function Delete($id){
-        //
-        
-        
-
-         $product = Product::find($id);
+        //  
+        $product = Product::find($id);
 
         if (! $product) {
             flash('error', 'Product deleted successfully!');
@@ -283,5 +286,18 @@ class ProductController extends Controller
         ProductVariant::where('product_id',$id)->delete();
         flash('success', 'Product deleted successfully!');
         return redirect()->route('vendor.products_index');
+    }
+
+
+
+    public function AttributeChange(Request $request){       
+       $category_id= $request->category_id;
+       $category_attributes = CategoryAttribute::where('category_id',$category_id)->first();  
+         $attribute_id = $category_attributes->attribute_id;
+        $attribute_values = AttributeValue::where('attribute_id',$attribute_id)->first();
+        $attribute_id= $attribute_values->attribute_id;
+        $attributes = Attribute::where('id',$attribute_id)->get();
+        return view('vendor.products.change',compact('attributes'));
+        
     }
 }

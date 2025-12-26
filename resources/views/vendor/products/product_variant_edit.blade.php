@@ -73,15 +73,26 @@
                                 required
                             />
 
-                            <label class="block text-sm font-medium text-gray-700 mb-1"> Attrribute Value ids</label>
-                            <input
-                                type="number"
-                                class="w-full rounded-md border-gray-300 focus:border-green-500 focus:ring-green-500"
-                                name="attribute_value_ids"
-                                placeholder="Enter Attrribute Value ids"
-                                value="{{$product_variant->attribute_value_ids }}"
-                                required
-                            />
+                           @php
+                                // Convert the comma-separated attribute_value_ids string into an array
+                                $selectedAttributes = explode(',', $product_variant->attribute_value_ids ?? '');
+                            @endphp
+
+                            @foreach ($attributes as $attribute)
+                                <label class="flex items-center space-x-2">
+                                    <input
+                                        type="checkbox"
+                                        name="attribute_value_ids[]"
+                                        value="{{ $attribute->id }}"
+                                        class="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                                        @if(in_array($attribute->id, $selectedAttributes)) checked @endif
+                                    >
+                                    <span class="text-sm text-gray-700">
+                                        {{ $attribute->name }}
+                                    </span>
+                                </label>
+                            @endforeach
+
 
                             <label class="block text-sm font-medium text-gray-700 mb-1"> Width </label>
                             <input

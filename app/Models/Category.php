@@ -15,10 +15,15 @@ class Category extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'parent_id',
-        'name',
-        'slug',
-        'position',
-    ];
+       protected $fillable = ['parent_id','name','slug','position'];
+
+    public function attributes()
+    {
+        return $this->belongsToMany(Attribute::class, 'category_attributes');
+    }
+
+    public function attributeValues()
+    {
+        return $this->hasMany(AttributeValue::class);
+    }
 }

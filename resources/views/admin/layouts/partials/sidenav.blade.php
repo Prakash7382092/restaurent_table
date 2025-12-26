@@ -58,11 +58,29 @@
                 </li>
 
                 <li class="menu-item">
-                    <a class="menu-link" href="#">
+                    <a class="menu-link" href="{{route('admin.attributes')}}">
                         <span class="menu-icon"><i data-lucide="layers"></i></span>
-                        <div class="menu-text">Inventory</div>
+                        <div class="menu-text">Attribute</div>
                     </a>
                 </li>
+
+                <li class="menu-item">
+                    <a class="menu-link" href="{{route('admin.attribute_values')}}">
+                        <span class="menu-icon"><i data-lucide="layers"></i></span>
+                        <div class="menu-text">Attribute values</div>
+                    </a>
+                </li>
+
+
+                <li class="menu-item">
+                    <a class="menu-link" href="{{route('admin.category_attributes')}}">
+                        <span class="menu-icon"><i data-lucide="layers"></i></span>
+                        <div class="menu-text"> Category Attribute </div>
+                    </a>
+                </li>
+                
+
+
                 <li class="menu-title">
                     <span>Analytics</span>
                 </li>

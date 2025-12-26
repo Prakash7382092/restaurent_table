@@ -6,6 +6,8 @@ use App\Http\Controllers\vendor\ProductController as VendorProductController;
 use App\Http\Controllers\vendor\ProductVariantController as VendorProductVariant; 
 use App\Http\Controllers\vendor\CategoryController as VendorCategoryVariant;
 use App\Http\Controllers\vendor\OrderController as VendorOrder;
+use App\Http\Controllers\vendor\CoupunController as VendorCoupun;
+
 use Illuminate\Support\Facades\Route;
 
 //Admin
@@ -13,7 +15,9 @@ use App\Http\Controllers\Admin\VendorController as AdminVendor;
 use App\Http\Controllers\Admin\CategoryController as AdminCategory;
 use App\Http\Controllers\Admin\ProductController as AdminProduct;
 use App\Http\Controllers\Admin\ProductVariantController as AdminVarinat;
-
+use App\Http\Controllers\Admin\AttributeController as AdminAttribute;
+use App\Http\Controllers\Admin\AttributeValueController as AdminAttributeValue;
+use App\Http\Controllers\Admin\CategoryAttributeController as AdminCategoryAttribute;
 
 
 Route::get('/', function () {
@@ -55,6 +59,7 @@ Route::middleware(['auth', 'vendor'])
         Route::post('/products/update', [VendorProductController::class, 'Update']) ->name('products_update');
         Route::get('/products/delete/{id}', [VendorProductController::class, 'Delete'])->name('products_delete');
         Route::get('/products/view/{id}', [VendorProductController::class, 'View']) ->name('view_product');  
+        Route::post('/products/category',[VendorProductController::class,'AttributeChange'])->name('category_change');
         
         
         //  vendor Product Variant
@@ -83,6 +88,11 @@ Route::middleware(['auth', 'vendor'])
          //Orders
          Route::get('orders',[VendorOrder::class,'Index'])->name('orders');
          Route::get('ordersshow/{id}',[VendorOrder::class,'Show'])->name('orders_show');
+
+         //Coupuns
+         
+        Route::get('/coupuns', [VendorCoupun::class, 'Index'])->name('coupuns'); 
+         Route::post('/coupuns/store', [VendorCoupun::class, 'Store'])->name('coupons_store'); 
         
 });
 
@@ -102,7 +112,7 @@ Route::middleware(['auth', 'admin'])
       Route::post('/vendors/update',[AdminVendor::class,'Update'])->name('user_update');
      
 
-      // Categories
+          // Categories
 
          Route::get('/category', [AdminCategory::class, 'Index'])->name('categories');              
          Route::get('/category', [AdminCategory::class, 'Index'])->name('categories');
@@ -121,21 +131,41 @@ Route::middleware(['auth', 'admin'])
         Route::get('/products/view/{id}', [AdminProduct::class, 'View']) ->name('view_product');  
         Route::get('/products/approval/{id}',[AdminProduct::class,'Approve'])->name('products_approve');
         Route::get('/products/reject/{id}',[AdminProduct::class,'Reject'])->name('products_reject');
+
         
 
         //Product Varinat
         Route::post('product_variant', [AdminVarinat::class,'Store'])->name('product_variant_store');
         Route::get('product_variant/{id}', [AdminVarinat::class,'Edit'])->name('product_variant_edit');
         Route::post('product_variant/update', [AdminVarinat::class,'Update'])->name('product_variant_update');
-        Route::get('product_variant/delete/{id}', [AdminVarinat::class,'Delete'])->name('product_variant_delete');
+        Route::get('product_variant/delete/{id}', [AdminVarinat::class,'Delete'])->name('product_variant_delete');   
+        
+        
+        // attributes
+        Route::get('/attributes',[AdminAttribute::class,'Index'])->name('attributes');
+        Route::post('/attributes/store',[AdminAttribute::class,'Store'])->name('attributes_store');
+        Route::get('/attributes/edit/{id}', [AdminAttribute::class, 'Edit'])->name('edit_attributes');
+        Route::post('/attributes/update', [AdminAttribute::class, 'Update'])->name('attributes_update');
+        Route::get('/attributes/delete/{id}',[AdminAttribute::class,'Delete'])->name('delete_attributes');
 
+
+        //Attribute Values
+        Route::get('/attribute-values', [AdminAttributeValue::class, 'index'])->name('attribute_values');
+        Route::get('/attribute-values/create', [AdminAttributeValue::class, 'create'])->name('attribute_values_create');
+        Route::post('/attribute-values/store', [AdminAttributeValue::class, 'store'])->name('attribute_values_store');
+        Route::get('/attribute-values/edit/{id}', [AdminAttributeValue::class, 'edit'])->name('attribute_values_edit');
+        Route::post('/attribute-values/update', [AdminAttributeValue::class, 'update'])->name('attribute_values_update');
+        Route::get('/attribute-values/delete/{id}', [AdminAttributeValue::class, 'delete']) ->name('attribute_values_delete');
 
         //
+         // Category Attributes CRUD
+        Route::get('category-attributes', [AdminCategoryAttribute::class, 'index'])->name('category_attributes');
+        Route::post('category-attributes/store', [AdminCategoryAttribute::class, 'store'])->name('category_attributes.store');
+        Route::get('category-attributes/edit/{id}', [AdminCategoryAttribute::class, 'edit'])->name('category_attributes.edit');
+        Route::post('category-attributes/update', [AdminCategoryAttribute::class, 'update'])->name('category_attributes.update');
+        Route::get('category-attributes/delete/{id}', [AdminCategoryAttribute::class, 'delete'])->name('category_attributes.delete');
 
-
-         
-
-
+        //
 
 });
 

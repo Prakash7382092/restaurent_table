@@ -48,10 +48,18 @@
                             <div>
                                 <form  id="productForm" action="{{ route('admin.products_store') }}" method="POST"  enctype="multipart/form-data">            
                                     @csrf                                    
-                                        <input type="hidden"
-                                            class="w-full rounded-md border-gray-300
-                                                    focus:border-green-500 focus:ring-green-500" name="vendor_id"
-                                            placeholder="Enter vendor id" value="{{ Session::get('vendor_id') }}">
+                                      
+
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                            Vendor Id
+                                        </label>
+                                        <select name="vendor_id" class="w-full rounded-md border-gray-300
+                                                    focus:border-green-500 focus:ring-green-500">
+                                                @foreach($categories as $category)
+                                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                                @endforeach
+                                            
+                                        </select>
 
 
                                         <label class="block text-sm font-medium text-gray-700 mb-1">

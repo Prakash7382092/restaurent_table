@@ -20,14 +20,14 @@ class ProductController extends Controller
     public function Index()
     {
         $categories = Category::all();
-        $products = Product::all();
-        
+        $products = Product::all();        
        return view('admin.products.index',compact('categories','products'));
     }
 
      // Create a new product
     public function store(Request $request){
-        echo "Update method called";        
+        echo "Update method called";     
+          
          $vendor_id = $request->vendor_id;
          $name = $request->name;
          $short_description = $request->short_description;
@@ -302,4 +302,6 @@ class ProductController extends Controller
         flash('error', 'Product Rejected successfully!');
         return redirect()->route('admin.products_index'); 
     }
+
+    
 }

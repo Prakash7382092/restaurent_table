@@ -204,10 +204,19 @@
 
 
                                                                 <label class="block text-sm font-medium text-gray-700 mb-1"> Attrribute Value ids</label>
-                                                                <input type="number"
-                                                                    class="w-full rounded-md border-gray-300
-                                                                            focus:border-green-500 focus:ring-green-500" name="attribute_value_ids"
-                                                                    placeholder="Enter Attrribute Value ids" value="" required>
+                                                                @foreach ($attributes as $attribute)
+                                                                    <label class="flex items-center space-x-2">
+                                                                        <input
+                                                                            type="checkbox"
+                                                                            name="attribute_value_ids[]"
+                                                                            value="{{ $attribute->id }}"
+                                                                            class="rounded border-gray-300 text-green-600 focus:ring-green-500">
+                                                                        <span class="text-sm text-gray-700">
+                                                                            {{ $attribute->name }}
+                                                                        </span>
+                                                                    </label>
+                                                                @endforeach
+                                                                  
 
 
                                                                 <label class="block text-sm font-medium text-gray-700 mb-1">
@@ -306,7 +315,16 @@
                                                 <td class="px-3.5 py-3 text-primary">{{ $product->variant_name }}</td>
                                                 <td class="px-3.5 py-3">{{ $product->base_price }}</td>
                                                 <td class="px-3.5 py-3">{{ $product->original_price }}</td>
-                                                    <td class="px-3.5 py-3">{{ $product->attribute_value_ids }}</td>
+                                                    <td class="px-3.5 py-3">
+                                                       
+                                                        @php
+                                                         $product_attribute= App\Models\Attribute::where('id',$product->attribute_value_ids)->first();
+                                                                                                     
+
+                                                        @endphp
+                                                        {{ $product_attribute->name ?? '' }}
+                                                    
+                                                    </td>
                                                     <td class="px-3.5 py-3">{{ $product->width }}</td>
                                                     <td class="px-3.5 py-3">{{ $product->height }}</td>
                                                     <td class="px-3.5 py-3">{{ $product->breadth }}</td>

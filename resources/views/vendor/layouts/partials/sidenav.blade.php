@@ -56,12 +56,15 @@
                         <div class="menu-text">Categories</div>
                     </a>
                 </li>
+
                 <li class="menu-item">
-                    <a class="menu-link" href="{{ route('vendor.dashboard') }}">
+                    <a class="menu-link" href="{{ route('vendor.coupuns') }}">
                         <span class="menu-icon"><i data-lucide="layers"></i></span>
-                        <div class="menu-text">Inventory</div>
+                        <div class="menu-text">Coupuns </div>
                     </a>
                 </li>
+
+                
                 <li class="menu-title">
                     <span>Analytics</span>
                 </li>

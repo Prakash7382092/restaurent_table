@@ -107,11 +107,15 @@
 
 
                                         <label class="block text-sm font-medium text-gray-700 mb-1"> Category</label>
-                                        <select name="category_id" class="w-full rounded-md border-gray-300">
+                                        <select name="category_id" id="category_id" class="w-full rounded-md border-gray-300" onchange="cat_change()">
                                             @foreach($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
                                         </select>
+
+                                        <div id="attributes_abc">
+
+                                        </div>
 
 
                                         <label class="block text-sm font-medium text-gray-700 mb-1">
@@ -324,7 +328,22 @@
 
     });
 
- 
+ function cat_change(){
+    console.log('Clicked');
+    var category_id =$("#category_id").val();
+    console.log(category_id);
+    $.ajax({        
+        url:"{{route('vendor.category_change')}}",
+        method:"post",
+        data: {
+             category_id: category_id,
+            _token: "{{ csrf_token() }}"
+        },
+        success:function(data){
+             $("#attributes_abc").html(data);
+        }
+    })
+ }
 </script>
 
 @endsection

@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\OrderItemController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\RestaurantController;
+use App\Http\Controllers\Api\MenuController;
+use App\Http\Controllers\Api\MenuItemController;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
@@ -41,9 +43,6 @@ Route::middleware(['auth:sanctum', 'role:customer'])->group(function () {
 
 
 
-
-
-
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     //Categories
      Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
@@ -51,9 +50,8 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('/categories', [CategoryController::class, 'store']) ->name('categories.store');
     Route::post('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy']) ->name('categories.destroy');
-    //Restaurents
-
-   
+    
+    //Restaurents  
 
     Route::prefix('restaurants')->group(function () {       
         Route::get('/', [RestaurantController::class, 'index'])->name('restaurants.index');       
@@ -62,17 +60,37 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
         Route::post('/{restaurant}', [RestaurantController::class, 'update'])->name('restaurants.update');
         Route::delete('/{restaurant}', [RestaurantController::class, 'destroy'])->name('restaurants.destroy');
     });
- 
+
+    // Reviews
+    Route::prefix('reviews')->group(function () {
+        Route::get('/', [ReviewController::class, 'index']);     
+        Route::post('/', [ReviewController::class, 'store']);     
+        Route::get('{id}', [ReviewController::class, 'show']);   
+        Route::post('{id}', [ReviewController::class, 'update']); 
+        Route::delete('{id}', [ReviewController::class, 'destroy']);
+    });
+
+    //Menus
+    
+    Route::prefix('menus')->group(function () {
+        Route::get('/', [MenuController::class, 'index'])->name('menus.index');         
+        Route::post('/', [MenuController::class, 'store'])->name('menus.store');        
+        Route::get('/{id}', [MenuController::class, 'show'])->name('menus.show');       
+        Route::post('/{id}', [MenuController::class, 'update'])->name('menus.update');  
+        Route::delete('/{id}', [MenuController::class, 'destroy'])->name('menus.destroy'); 
+    }); 
+
+    //Menu Items 
+
+    Route::prefix('menu-items')->group(function () {
+        Route::get('/', [MenuItemController::class, 'index'])->name('menu-items.index');
+        Route::post('/', [MenuItemController::class, 'store'])->name('menu-items.store');
+        Route::get('/{id}', [MenuItemController::class, 'show'])->name('menu-items.show');
+        Route::post('/{id}', [MenuItemController::class, 'update'])->name('menu-items.update');
+        Route::delete('/{id}', [MenuItemController::class, 'destroy'])->name('menu-items.destroy');
+    });     
 });
 
-
-Route::prefix('reviews')->group(function () {
-    Route::get('/', [ReviewController::class, 'index']);      // Admin
-    Route::post('/', [ReviewController::class, 'store']);     // Create
-    Route::get('{id}', [ReviewController::class, 'show']);    // View
-    Route::post('{id}', [ReviewController::class, 'update']); // Update
-    Route::delete('{id}', [ReviewController::class, 'destroy']); // Delete
-});
 
 
 

@@ -36,20 +36,8 @@
                 <li class="menu-title">
                     <span>Store Management</span>
                 </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="{{ route('vendor.products_index') }}">
-                        <span class="menu-icon"><i data-lucide="package"></i></span>
-                        <div class="menu-text">Products</div>
-                    </a>
-                </li>
-
-                
-                 <li class="menu-item">
-                    <a class="menu-link" href="{{ route('vendor.orders') }}">
-                        <span class="menu-icon"><i data-lucide="shopping-cart"></i></span>
-                        <div class="menu-text">Orders</div>
-                    </a>
-                </li>
+              
+            
                 <li class="menu-item">
                     <a class="menu-link" href="{{ route('vendor.categories') }}">
                         <span class="menu-icon"><i data-lucide="tags"></i></span>

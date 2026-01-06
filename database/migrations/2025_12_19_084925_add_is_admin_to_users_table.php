@@ -9,21 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    
+     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            // ✅ ADD column here
+            $table->boolean('is_admin')->default(0)->after('role');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
-            $table->boolean('is_admin')->default(0);
+            // ✅ REMOVE column here
+            $table->dropColumn('is_admin');
         });
     }
+
 };

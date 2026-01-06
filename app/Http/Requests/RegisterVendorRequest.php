@@ -25,6 +25,7 @@ class RegisterVendorRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'phone' => ['required', 'digits_between:10,15', 'unique:users,phone'],
             'password' => ['required', 'string', 'confirmed', Password::defaults()],
 
             // vendor specific

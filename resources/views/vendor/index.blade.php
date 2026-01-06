@@ -180,7 +180,7 @@
                         <div class="flex items-center justify-center mx-auto rounded-full size-14 bg-primary/10">
                             <i class="size-6 text-primary" data-lucide="package"></i>
                         </div>
-                        <h5 class="mt-4 text-center mb-2 text-default-800 font-semibold text-lg">{{ $stats['total_products'] }}</h5>
+                        <h5 class="mt-4 text-center mb-2 text-default-800 font-semibold text-lg">10</h5>
                         <p class="text-center text-sm text-default-500">Total Products</p>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
                         <div class="flex items-center justify-center mx-auto rounded-full size-14 bg-success/10">
                             <i class="size-6 text-success" data-lucide="check-circle"></i>
                         </div>
-                        <h5 class="mt-4 text-center mb-2 text-default-800 font-semibold text-lg">{{ $stats['active_products'] }}</h5>
+                        <h5 class="mt-4 text-center mb-2 text-default-800 font-semibold text-lg">5</h5>
                         <p class="text-center text-sm text-default-500">Active Products</p>
                     </div>
                 </div>
@@ -198,7 +198,7 @@
                         <div class="flex items-center justify-center mx-auto rounded-full size-14 bg-warning/10">
                             <i class="size-6 text-warning" data-lucide="clock"></i>
                         </div>
-                        <h5 class="mt-4 text-center mb-2 text-default-800 font-semibold text-lg">{{ $stats['pending_products'] }}</h5>
+                        <h5 class="mt-4 text-center mb-2 text-default-800 font-semibold text-lg">3</h5>
                         <p class="text-center text-sm text-default-500">Pending Approval</p>
                     </div>
                 </div>
@@ -207,7 +207,7 @@
                         <div class="flex items-center justify-center mx-auto rounded-full size-14 bg-info/10">
                             <i class="size-6 text-info" data-lucide="shopping-cart"></i>
                         </div>
-                        <h5 class="mt-4 text-center mb-2 text-default-800 font-semibold text-lg">{{ $stats['total_orders'] }}</h5>
+                        <h5 class="mt-4 text-center mb-2 text-default-800 font-semibold text-lg">3</h5>
                         <p class="text-center text-sm text-default-500">Total Orders</p>
                     </div>
                 </div>
@@ -234,7 +234,7 @@
                         </div>
                         <div class="text-sm">
                             <p class="mb-1 text-default-500">Total Revenue</p>
-                            <h6 class="font-semibold text-default-800">${{ number_format($stats['total_revenue'], 2) }}</h6>
+                            <h6 class="font-semibold text-default-800">100</h6>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
@@ -243,7 +243,7 @@
                         </div>
                         <div class="text-sm">
                             <p class="mb-1 text-default-500">Pending Orders</p>
-                            <h6 class="font-semibold text-default-800">{{ $stats['pending_orders'] }}</h6>
+                            <h6 class="font-semibold text-default-800">34</h6>
                         </div>
                     </div>
                 </div>
@@ -275,48 +275,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-default-200">
-                                        @forelse($recentProducts as $product)
-                                        <tr class="text-default-800 font-normal text-sm">
-                                            <td class="px-3.5 py-3">
-                                                <div class="flex items-center gap-3">
-                                                    @if($product->featured_image)
-                                                        <img src="{{ $product->featured_image }}" alt="{{ $product->name }}" class="size-10 rounded object-cover">
-                                                    @else
-                                                        <div class="size-10 rounded bg-default-200 flex items-center justify-center">
-                                                            <i class="size-5 text-default-500" data-lucide="image"></i>
-                                                        </div>
-                                                    @endif
-                                                    <span class="font-medium">{{ $product->name }}</span>
-                                                </div>
-                                            </td>
-                                            <td class="px-3.5 py-3">{{ $product->sku ?? 'N/A' }}</td>
-                                            <td class="px-3.5 py-3">
-                                                <span class="capitalize">{{ $product->type }}</span>
-                                            </td>
-                                            <td class="px-3.5 py-3">
-                                                @if($product->is_active && $product->is_approved)
-                                                    <span class="py-0.5 px-2.5 inline-flex items-center gap-x-1 text-xs font-medium bg-success/10 text-success rounded">
-                                                        <i class="size-3" data-lucide="check-circle"></i> Active
-                                                    </span>
-                                                @elseif(!$product->is_approved)
-                                                    <span class="py-0.5 px-2.5 inline-flex items-center gap-x-1 text-xs font-medium bg-warning/10 text-warning rounded">
-                                                        <i class="size-3" data-lucide="clock"></i> Pending
-                                                    </span>
-                                                @else
-                                                    <span class="py-0.5 px-2.5 inline-flex items-center gap-x-1 text-xs font-medium bg-default/10 text-default-500 rounded">
-                                                        <i class="size-3" data-lucide="x-circle"></i> Inactive
-                                                    </span>
-                                                @endif
-                                            </td>
-                                            <td class="px-3.5 py-3 text-xs"></td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td colspan="5" class="px-3.5 py-8 text-center text-default-500">
-                                                No products found. Start adding products to your store!
-                                            </td>
-                                        </tr>
-                                        @endforelse
+                                      
                                     </tbody>
                                 </table>
                             </div>
@@ -332,33 +291,7 @@
                 </div>
                 <div class="card-body">
                     <div class="flex flex-col gap-4">
-                        @forelse($recentOrders as $order)
-                        <div class="flex items-center justify-between p-3 rounded-lg bg-default-50">
-                            <div class="flex items-center gap-3">
-                                <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center font-semibold text-primary text-xs">
-                                    #{{ $order->id }}
-                                </div>
-                                <div>
-                                    <h6 class="mb-1 font-semibold text-default-800">{{ $order->user->name ?? 'Guest' }}</h6>
-                                    <p class="text-xs text-default-500">{{ $order->items->count() }} item(s) • ${{ number_format($order->total_payable, 2) }}</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                @if($order->status === 'pending')
-                                    <span class="py-0.5 px-2 text-xs font-medium bg-warning/10 text-warning rounded">Pending</span>
-                                @elseif($order->status === 'completed')
-                                    <span class="py-0.5 px-2 text-xs font-medium bg-success/10 text-success rounded">Completed</span>
-                                @elseif($order->status === 'processing')
-                                    <span class="py-0.5 px-2 text-xs font-medium bg-info/10 text-info rounded">Processing</span>
-                                @else
-                                    <span class="py-0.5 px-2 text-xs font-medium bg-default/10 text-default-500 rounded capitalize">{{ $order->status }}</span>
-                                @endif
-                                <p class="text-xs text-default-400 mt-1">{{ $order->created_at->diffForHumans() }}</p>
-                            </div>
-                        </div>
-                        @empty
-                        <p class="text-center text-default-500 py-4">No orders yet</p>
-                        @endforelse
+                     
                     </div>
                 </div>
             </div>

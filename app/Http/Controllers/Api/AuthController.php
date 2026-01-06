@@ -10,20 +10,25 @@ use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+
 
 class AuthController extends Controller
 {
     /**
      * Register a new customer
      */
+    
     public function registerCustomer(RegisterCustomerRequest $request)
     {
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
+            'phone' => $request->phone,
             'role' => 'customer',
+            'is_admin'=>'0',
             'status' => 'active',
         ]);
 
@@ -46,8 +51,9 @@ class AuthController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => $request->password,
-                'role' => 'vendor',
+                'password'=>Hash::make($request->password),
+                'phone'=>$request->phone,
+                'role' => 'user',
                 'status' => 'pending_approval',
             ]);
 
@@ -87,6 +93,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+            
         ]);
 
         if (! Auth::attempt($request->only('email', 'password'))) {

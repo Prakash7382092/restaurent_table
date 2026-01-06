@@ -50,13 +50,7 @@
                         <div class="menu-text">Categories</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="{{route('admin.products_index')}}">
-                        <span class="menu-icon"><i data-lucide="tags"></i></span>
-                        <div class="menu-text">Products</div>
-                    </a>
-                </li>
-
+              
                 <li class="menu-item">
                     <a class="menu-link" href="{{route('admin.attributes')}}">
                         <span class="menu-icon"><i data-lucide="layers"></i></span>
@@ -76,6 +70,14 @@
                     <a class="menu-link" href="{{route('admin.category_attributes')}}">
                         <span class="menu-icon"><i data-lucide="layers"></i></span>
                         <div class="menu-text"> Category Attribute </div>
+                    </a>
+                </li>
+
+
+                <li class="menu-item">
+                    <a class="menu-link" href="{{route('admin.reviews.index')}}">
+                        <span class="menu-icon"><i data-lucide="layers"></i></span>
+                        <div class="menu-text"> Reviews </div>
                     </a>
                 </li>
                 
